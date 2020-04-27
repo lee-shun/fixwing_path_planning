@@ -1,5 +1,16 @@
 #ifndef _DROPPING_FW_HPP_
 #define _DROPPING_FW_HPP_
+/*************************************************************************************
+*
+*Author:lee-shun & Hao Sun
+*
+*Date: 
+*
+*Description:
+*去年的投弹程序的复现
+*
+*
+*************************************************************************************/
 
 #include <iomanip>
 #include <iostream>
@@ -37,20 +48,6 @@ using namespace std;
 class DROPPING_FW {
 
 public:
-  struct _s_waypoint {
-    int type{0};
-
-    double lat{0.0};
-
-    double lon{0.0};
-
-    double alt{0.0};
-
-    float vel_sp{0.0};
-
-    float loit_radius{0.0};
-  };
-
   void run();
   void set_planeID(int id);
 
@@ -62,11 +59,21 @@ private:
   ros::Time begin_time;
   float get_ros_time(ros::Time begin);
 
+  ros::ServiceClient arming_client;
+  ros::ServiceClient set_mode_client;
+  ros::ServiceClient waypoint_setcurrent_client;
+  ros::ServiceClient waypoint_pull_client;
+  ros::ServiceClient waypoint_push_client;
+  ros::ServiceClient waypoint_clear_client;
   void ros_sub_pub();
-  bool reached_waypoint(const struct _s_waypoint &waypoint);
-  void push_waypoints_to_px4(const struct _s_waypoint &waypoint);
 
-  struct _s_waypoint WayPoints[50];
+  bool reached_waypoint(const struct _s_waypoint &waypoint);
+  void push_waypoints_to_px4(int size);
+  void clear_waypoint();
+
+  mavros_msgs::WaypointList waypoint_list;
+
+  mavros_msgs::Waypoint waypoint[100];/* 即将要发给px4的航点队列 */
   void plan_waypoint(int task_stage);
 };
 #endif
