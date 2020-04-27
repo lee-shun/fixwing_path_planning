@@ -68,10 +68,8 @@ private:
   void ros_sub_pub();
 
   bool reached_waypoint(const struct _s_waypoint &waypoint);
-  void push_waypoints_to_px4(int size);
+  void push_waypoints_to_px4(int size, mavros_msgs::Waypoint *points);
   void clear_waypoint();
-
-  mavros_msgs::WaypointList waypoint_list;
 
   mavros_msgs::Waypoint waypoint[100];/* 即将要发给px4的航点队列 */
   void plan_waypoint(int task_stage);

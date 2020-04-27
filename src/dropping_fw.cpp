@@ -76,19 +76,18 @@ void DROPPING_FW::ros_sub_pub() {
 }
 
 /**
- * @Input: 需要发送的航点的长度
+ * @Input: 需要发送的航点的长度、发送的航点数组的指针
  * @Output:
  * @Description: waypoint按照顺序逐次发给px4
  */
-void DROPPING_FW::push_waypoints_to_px4(int size) {
-
+void DROPPING_FW::push_waypoints_to_px4(int size, mavros_msgs::Waypoint *points) {
   mavros_msgs::WaypointPush waypoint_push;
 
   for (int i = 0; i < size; i++) {
 
     waypoint_push.request.start_index = 0;
 
-    waypoint_push.request.waypoints.push_back(waypoint[i]);
+    waypoint_push.request.waypoints.push_back(points[i]);
   }
 }
 
