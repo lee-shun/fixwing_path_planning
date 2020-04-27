@@ -107,4 +107,13 @@ void DROPPING_FW::clear_waypoint() {
   }
 }
 
+void DROPPING_FW::run()
+{
+    while(ros::ok())
+    {
+        /* 1. 规划起飞盘旋 */
+        /* 2.  */
+    }
+
+}
 int main() { return 0; }
