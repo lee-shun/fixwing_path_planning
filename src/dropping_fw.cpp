@@ -580,14 +580,10 @@ void DROPPING_FW::plan_waypoint(int task_stage)
 		waypoint[72].command = mavros_msgs::CommandCode::NAV_LAND;//降落命令
 		waypoint[72].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
 		waypoint[72].autocontinue = true;
-		waypoint[72].is_current = false
+		waypoint[72].is_current = false;
 		//--------------------------------------------------------------------降落部分
-		
-		
-
 		break;
-	
-
+}
 }
 
 void DROPPING_FW::run()
@@ -604,7 +600,7 @@ void DROPPING_FW::run()
 		ROS_INFO("Waypoint set to 0 success");
 	}
 	//调用航迹规划函数规划投弹机第一阶段航线
-	plan_waypoint(1）;
+	plan_waypoint(1);
 	//完成第一段航线的push  size：2
 	push_waypoints_to_px4(2, waypoint);
 	//重启qgc !!!!!!!!!!!!!!!!脚本路径需修改
@@ -641,7 +637,7 @@ void DROPPING_FW::run()
 	//接收完毕跳出循环
 
 	//调用航迹规划函数规划投弹机第二阶段航线
-	plan_waypoint(2）;
+	plan_waypoint(2);
 	//完成第一段航线的push  size：2
 	push_waypoints_to_px4(73, waypoint);
 	//重启qgc !!!!!!!!!!!!!!!!脚本路径需修改

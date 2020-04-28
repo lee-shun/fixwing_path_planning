@@ -40,7 +40,6 @@
 #include <std_msgs/Float64.h>
 
 #include "lib/syslib.hpp"
-#include "lib/vector.hpp"
 #include "lib/mathlib.hpp"
 
 using namespace std;

@@ -277,6 +277,7 @@ void DROPPING_FW::plan_waypoint(int task_stage)
 		//------------------------------------------------------------
 		
 }
+}
 
 void DROPPING_FW::run()
 {
@@ -292,7 +293,7 @@ void DROPPING_FW::run()
 		ROS_INFO("Waypoint set to 0 success");
 	}
 	//调用航迹规划函数规划侦察航线
-	plan_waypoint(1）;
+	plan_waypoint(1);
 	//完成航线的push  size：52
 	push_waypoints_to_px4(52, waypoint);
 	//重启qgc !!!!!!!!!!!!!!!!脚本路径需修改
@@ -320,8 +321,6 @@ void DROPPING_FW::run()
 		trigger_flag = 0;
 	}
 		
-
 }
-int main() { 
 
-	return 0; }
+int main() { return 0; }
