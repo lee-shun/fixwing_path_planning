@@ -641,11 +641,10 @@ void DROPPING_FW::run()
 	//完成第一段航线的push  size：2
 	push_waypoints_to_px4(73, waypoint);
 	//重启qgc !!!!!!!!!!!!!!!!脚本路径需修改
-	std::string res;
 	system("sh /home/sss/qgc_restart.sh");
 	std::cout << res << '\n';
 	//将当前的航点设置为盘旋航点
-	WaypointSetCurrent waypoint_setcurrent;
+	mavros_msgs::WaypointSetCurrent waypoint_setcurrent;
 	waypoint_setcurrent.request.wp_seq = 1;
 	if (waypoint_setcurrent_client.call(waypoint_setcurrent) && waypoint_setcurrent.response.success)
 	{
@@ -654,6 +653,8 @@ void DROPPING_FW::run()
 	//盘旋切出前往投弹航线部分-----------------------------------------------------------------------
 	double distance_tan;
 	double waypoint2_x, waypoint2_y;
+	double current_lat, current_lon;
+	double current_x, current_y;
 	int begin_task_flag = 0;
 	add = ll2xy(waypoint[2].x_lat, waypoint[2].y_long);
 	waypoint2_x = add[0];
