@@ -108,7 +108,7 @@ void DROPPING_FW::clear_waypoint()
   }
 }
 
-void DROPPING_FW::plan_waypoint(int task_stage)()
+void DROPPING_FW::plan_waypoint(int task_stage)
 {
 	int stage = task_stage;
 	switch (stage) {
@@ -120,17 +120,17 @@ void DROPPING_FW::plan_waypoint(int task_stage)()
 		double runway_takeoff_length, runway_takeoff_angular;
 		wei0 = 39.9890143;
 		jing0 = 116.353457;
-		double w1 = 39.9897585, w2 = 39.9897833, w3 = 39.9882652, w4 = 39.9882500;
-		double j1 = 116.3526900, j2 = 116.3541295, j3 = 116.3542219, j4 = 116.3527874;
+		double w2 = 39.9897585, w1 = 39.9897833, w4 = 39.9882652, w3 = 39.9882500;
+		double j2 = 116.3526900, j1 = 116.3541295, j4 = 116.3542219, j3 = 116.3527874;
 		double *add1;
 		double *add2;
 		double *add3;
 		double *add4;
 		double w1_x, w2_x, w3_x, w4_x, w1_y, w2_y, w3_y, w4_y;
-		add1 = 112xy(w1, j1);
-		add2 = 112xy(w2, j2);
-		add3 = 112xy(w3, j3);
-		add4 = 112xy(w4, j4);
+		add1 = ll2xy(w1, j1);
+		add2 = ll2xy(w2, j2);
+		add3 = ll2xy(w3, j3);
+		add4 = ll2xy(w4, j4);
 		w1_x = add1[0];
 		w1_y = add1[1];
 		w2_x = add2[0];
@@ -273,6 +273,7 @@ void DROPPING_FW::plan_waypoint(int task_stage)()
 		waypoint[51].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
 		waypoint[51].autocontinue = true;
 		waypoint[51].is_current = false;
+	        break;
 		//------------------------------------------------------------
 		
 }
