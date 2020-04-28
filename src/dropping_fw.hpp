@@ -141,5 +141,145 @@ struct Circle {
 	Circle(Point c, double r) :c(c), r(r) {}
 	Point getpoint(double a) { return Point(c.x + cos(a)*r, c.y + sin(a)*r); }
 };
+	
+/*
+1.精度  要学着用dcmp
+2.引用  不能交换两个引用swap（）,引用中间不能变
+*/
+//三态函数比较;精度问题
+int dcmp(double x) {
+	if (fabs(x)<eps) return 0;
+	return x<0 ? -1 : 1;
+}
+
+/*
+求圆的公切线
+*/
+int getTan(Circle A, Circle B, Point*  va, Point* vb) {
+	int cnt = 0;
+	if (A.r<B.r) { swap(A, B); swap(va, vb); }
+	double d = (A.c - B.c).len();
+	double rdif = A.r - B.r, rsum = A.r + B.r;
+	//内含，没有公切线
+	if (dcmp(d - rdif)<0)return 0;
+	//内切，有一条公切线
+	double base = atan2(B.c.y - A.c.y, B.c.x - A.c.x);
+	if (dcmp(d) == 0 && dcmp(A.r - B.r) == 0)return -1;
+	if (dcmp(d - rdif) == 0) {
+		va[cnt] = A.getpoint(base); vb[cnt] = B.getpoint(base); cnt++;
+		return cnt;
+	}
+	//一定有两条外公切线
+	double th = acos((A.r - B.r) / d);
+	va[cnt] = A.getpoint(base + th); vb[cnt] = B.getpoint(base + th); cnt++;
+	va[cnt] = A.getpoint(base - th); vb[cnt] = B.getpoint(base - th); cnt++;
+	//可能有一条公切线
+	if (dcmp(d - rsum) == 0) {
+		va[cnt] = A.getpoint(base); vb[cnt] = B.getpoint(base + pi); cnt++;
+	}
+	else if (dcmp(d - rsum)>0) {
+		double th2 = acos((A.r + B.r) / d);
+		va[cnt] = A.getpoint(base + th2); vb[cnt] = B.getpoint(base + th2 + pi); cnt++;
+		va[cnt] = A.getpoint(base - th2); vb[cnt] = B.getpoint(base - th2 + pi); cnt++;
+	}
+	return cnt;
+}
+
+//===========================用于计算切点的子函数===================
+//输入的数据为纬经
+double *point_tangency(double g[2])
+{
+	//传入目标点
+	//===========================圆心坐标为侦查区的中心===================
+	double x0 = xc;
+	double y0 = yc;
+
+	//==========================================================================
+
+	double r0 = r;
+	double y[2];
+	double x_1, y_1, x_2, y_2;
+	double k1, k2, *res = y;
+	double x[2];
+	double *add;
+	//将用纬度和经度表示的转化为ENU系
+	//    cout<<"x[0]="<< x[0] <<endl;
+	//    cout<<"wei0="<< wei0 <<endl;
+
+	//纬经高转化为ENU(xyz)
+	//    x[1]= (g[0] - wei0) * 111177.0;
+	//    x[0]= (g[1] - jing0) * 85155.0;
+	//    cout<<"纬经高转化为ENU(xyz)1"<<endl;
+	//    cout<<fixed<< setprecision(10)<<"x[0] ="<< x[0] <<endl;
+	//    cout<<fixed<< setprecision(10)<<"x[1] ="<< x[1] <<endl;
+
+	//此处代码已经测试成功!!
+	add = ll2xy(g[0], g[1]);
+	x[0] = add[0];
+	x[1] = add[1];
+
+	//    cout<<"纬经高转化为ENU(xyz)2"<<endl;
+	//    cout<<fixed<< setprecision(10)<<"x[0] ="<< x[0] <<endl;
+	//    cout<<fixed<< setprecision(10)<<"x[1] ="<< x[1] <<endl;
+
+
+	//找出两个切点（x_1,y_1）(x_2,y_2)                                             ///此处采取的圆的半径为r0。值为r，盘旋半径
+	k1 = (y0*x0 + x[1] * x[0] - y0*x[0] - x[1] * x0 + sqrt(r0*r0*(-2 * y0*x[1] - 2 * x0*x[0] + x[1] * x[1] +
+		y0*y0 + x0*x0 - r0*r0 + x[0] * x[0]))) / (-r0*r0 + x0*x0 - 2 * x0*x[1] + x[0] * x[0]);
+	k2 = (y0*x0 + x[1] * x[0] - y0*x[0] - x[1] * x0 - sqrt(r0*r0*(-2 * y0*x[1] - 2 * x0*x[0] + x[1] * x[1] +
+		y0*y0 + x0*x0 - r0*r0 + x[0] * x[0]))) / (-r0*r0 + x0*x0 - 2 * x0*x[0] + x[0] * x[0]);
+	x_1 = (-k1*x[1] + x0 + k1*k1*x[0] + y0*k1) / (1 + k1*k1);
+	y_1 = -(-x[1] - k1*x0 - y0*k1*k1 + k1*x[0]) / (1 + k1*k1);
+	x_2 = (-k2*x[1] + x0 + k2*k2*x[0] + y0*k2) / (1 + k2*k2);
+	y_2 = -(-x[1] - k2*x0 - y0*k2*k2 + k2*x[0]) / (1 + k2*k2);
+
+	//%%%%判断逆时针是先到哪个切点%%%%%%%%
+	double w[9] = { 0, -1, y0, 1, 0, -x0, -y0, x0, 0 };
+	double r1[3] = { x_1 - x0, y_1 - y0, 0 };
+	double r2[3] = { x_2 - x0, y_2 - y0, 0 };
+	double v1[3], v2[3];
+	double s[3] = { x[0] - x0, x[1] - y0, 0 };
+	double s1 = 0, s2 = 0;
+	for (int i = 0; i<3; i++)
+	{
+		v1[i] = w[i * 3 + 0] * r1[0] + w[i * 3 + 1] * r1[1] + w[i * 3 + 2] * r1[2];
+		v2[i] = w[i * 3 + 0] * r2[0] + w[i * 3 + 1] * r2[1] + w[i * 3 + 2] * r2[2];
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		s1 = s1 + s[i] * v1[i];
+		s2 = s2 + s[i] * v2[i];
+	}
+	if (s1 > 0)
+	{
+		y[0] = x_1;
+		y[1] = y_1;
+		//cout << fixed << setprecision(10) << "y[0] =" << x_1 << endl;
+		//cout << fixed << setprecision(10) << "y[1] =" << y_1 << endl;
+
+	}
+	if (s2 > 0)
+	{
+		y[0] = x_2;
+		y[1] = y_2;
+		//cout << fixed << setprecision(10) << "y[0] =" << x_2 << endl;
+		//cout << fixed << setprecision(10) << "y[1] =" << y_2 << endl;
+
+	}
+	//cout << fixed << setprecision(10) << "res =" << res << endl;
+
+	//ENU(xyz)转化为纬经高
+	add = xy2ll(y[0], y[1]);
+	y[0] = add[0];
+	y[1] = add[1];
+
+	//    y[0] = wei0 + y[1] / 111177.0;
+	//    y[1] = jing0 + y[0] / 85155.0;
+	//    cout<<"求切点的函数!"<<endl;
+	//    cout<<fixed<< setprecision(10)<<"y[0] ="<< y[0] <<endl;
+	//    cout<<fixed<< setprecision(10)<<"y[1] ="<< y[1] <<endl;
+
+	return res;
+}
 };
 #endif
