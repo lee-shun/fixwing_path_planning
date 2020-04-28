@@ -44,7 +44,11 @@
 #include "lib/mathlib.hpp"
 
 using namespace std;
-
+mavros_msgs::State current_state;
+mavros_msgs::WaypointList current_waypoints;
+mavros_msgs::WaypointReached reached_waypoints;
+sensor_msgs::NavSatFix current_gps;
+mavros_msgs::WaypointList waypoint_list;
 class DROPPING_FW {
 
 public:
