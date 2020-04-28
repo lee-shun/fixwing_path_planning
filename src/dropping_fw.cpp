@@ -108,7 +108,7 @@ void DROPPING_FW::clear_waypoint()
   }
 }
 
-void DROPPING_FW::plan_waypoint(int task_stage)()
+void DROPPING_FW::plan_waypoint(int task_stage)
 {
 	int stage = task_stage;
 	switch (stage) {
@@ -163,7 +163,6 @@ void DROPPING_FW::plan_waypoint(int task_stage)()
 		double paolenth;
 		double R, pointlenth, desire_ds, ds;
 		double tan_x, tan_y;
-		double *add;
 		double w1 = 39.9897585, w2 = 39.9897833, w3 = 39.9882652, w4 = 39.9882500;
 		double j1 = 116.3526900, j2 = 116.3541295, j3 = 116.3542219, j4 = 116.3527874;
 		wei0 = 39.9890143;
@@ -183,7 +182,7 @@ void DROPPING_FW::plan_waypoint(int task_stage)()
 		goal[1] = 116.3564010;
 		//以下为航迹规划---------------------------------------------------------------------------------------------------------
 		///计算飞机飞行高度对应平抛距离
-		paolenth = v * sqrt((2 * H) / g);
+		paolenth = v * sqrt((2 * 30) / g);
 
 		///计算飞机可以直接平抛的大圆半径
 		desire_ds = 80;                          //在投掷之前必须先飞多少的直线
@@ -523,6 +522,7 @@ void DROPPING_FW::plan_waypoint(int task_stage)()
 
 		dtheta1 = theta_tan1 - theta_goal;
 		//################################42-51号航点的写入
+	        int i;
 		for (i = 42; i <= 51; i++)
 		{
 
