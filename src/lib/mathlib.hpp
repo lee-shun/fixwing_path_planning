@@ -27,18 +27,6 @@ using namespace std;
 #define CONSTANTS_ONE_G 9.80665
 #define rep(i,a,b) for(int i=a;i<b;i++)
 #define per(i,a,b) for(int i=b-1;i>=a;i--)
-const double eps = 1e-9;
-int r = 30; //盘旋半径
-double wc;
-double jc;
-double jing0, wei0;
-double xc, yc, goal_x, goal_y;
-double x, y;
-class Point;
-typedef Point Vec;
-const double g = 9.80665;  //重力加速度
-const float pi = 3.141593;
-
 
 //获取绝对值
 float abs_num(float a)
@@ -253,7 +241,7 @@ int dcmp(double x) {
 	if (fabs(x)<eps) return 0;
 	return x<0 ? -1 : 1;
 }
-struct Point {
+/*struct Point {
 	double x, y;
 	Point(double _x = 0, double _y = 0) :x(_x), y(_y) {}
 	//向量与常数 注意常数要放在后面
@@ -303,7 +291,7 @@ struct Circle {
 	Point c; double r;
 	Circle(Point c, double r) :c(c), r(r) {}
 	Point getpoint(double a) { return Point(c.x + cos(a)*r, c.y + sin(a)*r); }
-};
+};*/
 
 
 
@@ -410,19 +398,19 @@ double *point_tangency(double g[2])
 	{
 		y[0] = x_1;
 		y[1] = y_1;
-		cout << fixed << setprecision(10) << "y[0] =" << x_1 << endl;
-		cout << fixed << setprecision(10) << "y[1] =" << y_1 << endl;
+		//cout << fixed << setprecision(10) << "y[0] =" << x_1 << endl;
+		//cout << fixed << setprecision(10) << "y[1] =" << y_1 << endl;
 
 	}
 	if (s2 > 0)
 	{
 		y[0] = x_2;
 		y[1] = y_2;
-		cout << fixed << setprecision(10) << "y[0] =" << x_2 << endl;
-		cout << fixed << setprecision(10) << "y[1] =" << y_2 << endl;
+		//cout << fixed << setprecision(10) << "y[0] =" << x_2 << endl;
+		//cout << fixed << setprecision(10) << "y[1] =" << y_2 << endl;
 
 	}
-	cout << fixed << setprecision(10) << "res =" << res << endl;
+	//cout << fixed << setprecision(10) << "res =" << res << endl;
 
 	//ENU(xyz)转化为纬经高
 	add = xy2ll(y[0], y[1]);
@@ -437,7 +425,7 @@ double *point_tangency(double g[2])
 
 	return res;
 }
-void printwaypoint(const mavros_msgs::WaypointList points)
+/*void printwaypoint(const mavros_msgs::WaypointList points)
 {
 	cout << "count:" << points.waypoints.size() << endl;
 	for (size_t i = 0; i < points.waypoints.size(); i++)
@@ -452,5 +440,5 @@ void printwaypoint(const mavros_msgs::WaypointList points)
 
 	}
 
-}
+}*/
 #endif
