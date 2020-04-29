@@ -135,6 +135,9 @@ include_directories(
 #   src/${PROJECT_NAME}/fixwing_path_planning.cpp
 # )
 
+add_library(dropping_fw_lib
+    src/dropping_fw.cpp)
+
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
@@ -147,6 +150,13 @@ include_directories(
 add_executable(dropping_fw src/dropping_fw.cpp)
 target_link_libraries(dropping_fw 
     ${catkin_LIBRARIES}
+)
+add_executable(zhenchaji_fw src/zhenchaji_fw.cpp)
+target_link_libraries(zhenchaji_fw 
+    ${catkin_LIBRARIES}
+)
+target_link_libraries(zhenchaji_fw 
+    dropping_fw_lib
 )
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

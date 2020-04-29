@@ -185,52 +185,55 @@ void cov_lat_long_2_m(double a_pos[2], double b_pos[2], double m[2])
     m[0] = n_distance;
     m[1] = e_distance;
 }
-//将ENU(xyz)转换为经纬度(LLA)
-//使用方式
-//add=ll2xy(x[0],x[1]);
-//x[0]=add[0];
-//x[1]=add[1];
-double *xy2ll(double x, double y)
-{
-	double LL[2];
-	double wei0, jing0;
-	wei0 = 39.9890143;
-	jing0 = 116.353457;
-	double *ret = LL;
 
-	//纬度
-	LL[0] = wei0 + y / 111177.0;                                                                       ///?????????????
-	//经度
-	LL[1] = jing0 + x / 85155.0;
+/* 将ENU(xyz)转换为经纬度(LLA) */
+/* 使用方式 */
+/* add=ll2xy(x[0],x[1]); */
+/* x[0]=add[0]; */
+/* x[1]=add[1]; */
+double *xy2ll(double x, double y) {
 
-	//    cout<<fixed<< setprecision(10)<<"y[0] ="<< y[0] <<endl;
-	//    cout<<fixed<< setprecision(10)<<"y[1] ="<< y[1]<<endl;
+  double LL[2];
+  double wei0, jing0;
+  wei0 = 39.9890143;
+  jing0 = 116.353457;
+  double *ret = LL;
 
-	return ret;
+  //纬度
+  LL[0] = wei0 + y / 111177.0;
+  //经度
+  LL[1] = jing0 + x / 85155.0;
 
+  return ret;
 }
-//将经纬度(LLA)转换为ENU(xyz)
-//使用方式
-//add=xy2ll(y[0],y[1]);
-//y[0] = add[0];
-//y[1] = add[1];
-double *ll2xy(double w, double j)
-{
-	double XY[2];
-	double wei0, jing0;
-	wei0 = 39.9890143;
-	jing0 = 116.353457;
-	double *ret = XY;
-	//X
-	XY[0] = (j - jing0) * 85155.0;
-	//Y
-	XY[1] = (w - wei0) * 111177.0;
 
-	//    cout<<fixed<< setprecision(10)<<"y[0] ="<< y[0] <<endl;
-	//    cout<<fixed<< setprecision(10)<<"y[1] ="<< y[1]<<endl;
+/* 将经纬度(LLA)转换为ENU(xyz) */
+/* 使用方式 */
+/* add=xy2ll(y[0],y[1]); */
+/* y[0] = add[0]; */
+/* y[1] = add[1]; */
+double *ll2xy(double w, double j) {
+  double XY[2];
+  double wei0, jing0;
+  wei0 = 39.9890143;
+  jing0 = 116.353457;
+  double *ret = XY;
+  // X
+  XY[0] = (j - jing0) * 85155.0;
+  // Y
+  XY[1] = (w - wei0) * 111177.0;
+  return ret;
+}
 
-	return ret;
-
+/*
+1.精度
+2.引用  不能交换两个引用swap（）,引用中间不能变
+*/
+int dcmp(double x) {
+  const double eps = 1e-9;
+  if (fabs(x) < eps)
+    return 0;
+  return x < 0 ? -1 : 1;
 }
 
 #endif
