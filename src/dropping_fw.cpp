@@ -81,8 +81,21 @@ void DROPPING_FW::ros_sub_pub() {
       add2str(uavID, "mavros/mission/clear"));
 
   /* 【订阅】无人机当前状态 */
+
   state_sub = nh.subscribe<mavros_msgs::State>(
       add2str(uavID, "mavros/state"), 10, &DROPPING_FW::state_cb, this);
+
+  waypoints_sub = nh.subscribe<mavros_msgs::WaypointList>(
+      add2str(uavID, "mavros/mission/waypoints"), 10,
+      &DROPPING_FW::get_waypoints, this);
+
+  waypointsreach_sub = nh.subscribe<mavros_msgs::WaypointReached>(
+      add2str(uavID, "mavros/mission/reached"), 10,
+      &DROPPING_FW::waypoints_reached, this);
+
+  currentgps_sub = nh.subscribe<sensor_msgs::NavSatFix>(
+      add2str(uavID, "mavros/global_position/global"), 10,
+      &DROPPING_FW::current_gps_callback, this);
 }
 
 /**

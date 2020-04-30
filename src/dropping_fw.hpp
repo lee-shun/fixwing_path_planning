@@ -1,16 +1,16 @@
 #ifndef _DROPPING_FW_HPP_
 #define _DROPPING_FW_HPP_
 /*************************************************************************************
-*
-*Author:lee-shun & Hao Sun
-*
-*Date: 
-*
-*Description:
-*去年的投弹程序的复现
-*
-*
-*************************************************************************************/
+ *
+ *Author:lee-shun & Hao Sun
+ *
+ *Date:
+ *
+ *Description:
+ *去年的投弹程序的复现
+ *
+ *
+ *************************************************************************************/
 
 #include <iomanip>
 #include <iostream>
@@ -39,10 +39,10 @@
 #include <sensor_msgs/NavSatFix.h>
 #include <std_msgs/Float64.h>
 
-#include "lib/syslib.hpp"
-#include "lib/mathlib.hpp"
-#include "lib/line.hpp"
 #include "lib/circle.hpp"
+#include "lib/line.hpp"
+#include "lib/mathlib.hpp"
+#include "lib/syslib.hpp"
 #include "lib/vector.hpp"
 
 using namespace std;
@@ -54,7 +54,6 @@ public:
   void set_planeID(int id);
 
 protected:
-
   int planeID{1};
   string uavID{"uav1/"};
 
@@ -70,25 +69,25 @@ protected:
   ros::ServiceClient waypoint_clear_client;
 
   ros::Subscriber state_sub;
+  ros::Subscriber waypoints_sub;
+  ros::Subscriber waypointsreach_sub;
+  ros::Subscriber currentgps_sub;
 
   mavros_msgs::State current_state;
-  void state_cb(const mavros_msgs::State::ConstPtr& msg){
-	  current_state = *msg;
+  void state_cb(const mavros_msgs::State::ConstPtr &msg) {
+    current_state = *msg;
   }
   mavros_msgs::WaypointList current_waypoints;
-  void get_waypoints(const mavros_msgs::WaypointList::ConstPtr& msg)
-  {
-	  current_waypoints = *msg;
+  void get_waypoints(const mavros_msgs::WaypointList::ConstPtr &msg) {
+    current_waypoints = *msg;
   }
   mavros_msgs::WaypointReached reached_waypoints;
-  void waypoints_reached(const mavros_msgs::WaypointReached::ConstPtr& msg)
-  {
-	  reached_waypoints = *msg;
+  void waypoints_reached(const mavros_msgs::WaypointReached::ConstPtr &msg) {
+    reached_waypoints = *msg;
   }
   sensor_msgs::NavSatFix current_gps;
-  void current_gps_callback(const sensor_msgs::NavSatFix::ConstPtr& msg)
-  {
-	  current_gps = *msg;
+  void current_gps_callback(const sensor_msgs::NavSatFix::ConstPtr &msg) {
+    current_gps = *msg;
   }
   mavros_msgs::WaypointList waypoint_list;
   void ros_sub_pub();
@@ -97,7 +96,7 @@ protected:
   void push_waypoints_to_px4(int size, mavros_msgs::Waypoint *points);
   void clear_waypoint();
 
-  mavros_msgs::Waypoint waypoint[100];/* 即将要发给px4的航点队列 */
+  mavros_msgs::Waypoint waypoint[100]; /* 即将要发给px4的航点队列 */
   void plan_waypoint(int task_stage);
 
   int r = 30; //盘旋半径
@@ -112,9 +111,5 @@ protected:
   Line L[10];
 
   double *point_tangency(double g[2]);
-
-  void state_cb(const mavros_msgs::State::ConstPtr &msg) {
-    current_state = *msg;
-  }
 };
 #endif
