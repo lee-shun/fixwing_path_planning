@@ -69,6 +69,8 @@ protected:
   ros::ServiceClient waypoint_push_client;
   ros::ServiceClient waypoint_clear_client;
 
+  ros::Subscriber state_sub;
+
   mavros_msgs::State current_state;
   mavros_msgs::WaypointList current_waypoints;
   mavros_msgs::WaypointReached reached_waypoints;
@@ -95,5 +97,9 @@ protected:
   Line L[10];
 
   double *point_tangency(double g[2]);
+
+  void state_cb(const mavros_msgs::State::ConstPtr &msg) {
+    current_state = *msg;
+  }
 };
 #endif

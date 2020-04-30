@@ -34,6 +34,9 @@ void DROPPING_FW::set_planeID(int id) {
   planeID = id;
 
   switch (planeID) {
+  case 0:
+    uavID = "uav0/";
+    break;
   case 1:
     uavID = "uav1/";
     break;
@@ -42,6 +45,9 @@ void DROPPING_FW::set_planeID(int id) {
     break;
   case 3:
     uavID = "uav3/";
+    break;
+  case -1:
+    uavID = "";
     break;
   }
 }
@@ -73,6 +79,10 @@ void DROPPING_FW::ros_sub_pub() {
 
   waypoint_clear_client = nh.serviceClient<mavros_msgs::WaypointClear>(
       add2str(uavID, "mavros/mission/clear"));
+
+  /* 【订阅】无人机当前状态 */
+  state_sub = nh.subscribe<mavros_msgs::State>(
+      add2str(uavID, "mavros/state"), 10, &DROPPING_FW::state_cb, this);
 }
 
 /**
@@ -186,11 +196,13 @@ void DROPPING_FW::plan_waypoint(int task_stage) {
     double runway_takeoff_length, runway_takeoff_angular;
     wei0 = 39.9890143;
     jing0 = 116.353457;
+
     // home点设置？
     home_lat = 39.9891248;
     home_long = 116.3558232;
     runway_takeoff_length = 100;
     runway_takeoff_angular = 0;
+
     //起飞点经纬获取
     add = ll2xy(home_lat, home_long);
     home_x = add[0];
@@ -637,7 +649,7 @@ void DROPPING_FW::plan_waypoint(int task_stage) {
 void DROPPING_FW::run() {
 
   ros::Rate rate(50.0);
-
+  ros_sub_pub();
   clear_waypoint();
   //将当前的目标航点设为0号航点
   mavros_msgs::WaypointSetCurrent Current_wp;
@@ -650,12 +662,15 @@ void DROPPING_FW::run() {
 
   //调用航迹规划函数规划投弹机第一阶段航线
   plan_waypoint(1);
+
   //完成第一段航线的push  size：2
   push_waypoints_to_px4(2, waypoint);
+
   //重启qgc !!!!!!!!!!!!!!!!脚本路径需修改
   std::string res;
-  system("sh /home/sss/qgc_restart.sh");
+  /* system("sh /home/sss/qgc_restart.sh"); */
   std::cout << res << '\n';
+
   //起飞检测--------------------------------------------------------------
   int mission_receive_flag = 1;
   int wait_flag = 1;
@@ -678,17 +693,21 @@ void DROPPING_FW::run() {
   }
   //----------------------------------------------------------------------
   //接收侦察机节点消息
-  while (ros::ok()) {
-    /* 1. 接收消息*/
-  }
+  int receiver_flag;
+  cout<<"输入接受消息"<<endl;
+  cin>>receiver_flag;
+  /* while (ros::ok()) { */
+  /* } */
   //接收完毕跳出循环
 
   //调用航迹规划函数规划投弹机第二阶段航线
   plan_waypoint(2);
+
   //完成第一段航线的push  size：2
   push_waypoints_to_px4(73, waypoint);
+
   //重启qgc !!!!!!!!!!!!!!!!脚本路径需修改
-  system("sh /home/sss/qgc_restart.sh");
+  /* system("sh /home/sss/qgc_restart.sh"); */
   std::cout << res << '\n';
   //将当前的航点设置为盘旋航点
   mavros_msgs::WaypointSetCurrent waypoint_setcurrent;
@@ -735,6 +754,12 @@ void DROPPING_FW::run() {
     cout << "开始执行投弹任务!!" << endl;
   }
 }
-int main() { 
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "drop_fw1");
 
-	return 0; }
+    DROPPING_FW drop_fw1;
+    drop_fw1.set_planeID(-1);
+    drop_fw1.run();
+    return 0;
+}
