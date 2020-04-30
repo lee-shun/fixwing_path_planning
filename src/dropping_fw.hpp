@@ -72,9 +72,24 @@ protected:
   ros::Subscriber state_sub;
 
   mavros_msgs::State current_state;
+  void state_cb(const mavros_msgs::State::ConstPtr& msg){
+	  current_state = *msg;
+  }
   mavros_msgs::WaypointList current_waypoints;
+  void get_waypoints(const mavros_msgs::WaypointList::ConstPtr& msg)
+  {
+	  current_waypoints = *msg;
+  }
   mavros_msgs::WaypointReached reached_waypoints;
+  void waypoints_reached(const mavros_msgs::WaypointReached::ConstPtr& msg)
+  {
+	  reached_waypoints = *msg;
+  }
   sensor_msgs::NavSatFix current_gps;
+  void current_gps_callback(const sensor_msgs::NavSatFix::ConstPtr& msg)
+  {
+	  current_gps = *msg;
+  }
   mavros_msgs::WaypointList waypoint_list;
   void ros_sub_pub();
 
