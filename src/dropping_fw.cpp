@@ -99,6 +99,12 @@ void DROPPING_FW::push_waypoints_to_px4(int size, mavros_msgs::Waypoint *points)
 
     waypoint_push.request.waypoints.push_back(points[i]);
   }
+  if (waypoint_push_client.call(waypoint_push) && waypoint_push.response.success)
+  {
+	  ROS_INFO("%d", waypoint_push.response.wp_transfered);
+	  ROS_INFO("Waypoint push success");
+  }
+  cout << "push执行结束!!" << endl;
 }
 
 double *DROPPING_FW::point_tangency(double g[2]) {
@@ -183,6 +189,7 @@ void DROPPING_FW::clear_waypoint()
 
     ROS_INFO("Waypoint clear success");
   }
+  cout << "clear执行结束!!" << endl;
 }
 
 void DROPPING_FW::plan_waypoint(int task_stage) {
@@ -644,6 +651,7 @@ void DROPPING_FW::plan_waypoint(int task_stage) {
     //--------------------------------------------------------------------降落部分
     break;
   }
+   cout << "plan执行结束!!" << endl;
 }
 
 void DROPPING_FW::run() {
@@ -716,6 +724,7 @@ void DROPPING_FW::run() {
       waypoint_setcurrent.response.success) {
     ROS_INFO("Waypoint set to 1 success");
   }
+    cout << "set to 1!!" << endl;
 
   //盘旋切出前往投弹航线部分-----------------------------------------------------------------------
   double distance_tan;
@@ -739,6 +748,7 @@ void DROPPING_FW::run() {
     distance_tan = sqrt((current_x - waypoint2_x) * (current_x - waypoint2_x) +
                         (current_y - waypoint2_y) * (current_y - waypoint2_y));
     cout << "distance_tan=" << distance_tan << endl;
+    begin_task_flag = 1;//测试时只输出一次
     if (distance_tan < 3) {
 
       begin_task_flag = 1;
