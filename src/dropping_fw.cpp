@@ -656,11 +656,39 @@ void DROPPING_FW::plan_waypoint(int task_stage) {
     //降落航点的写入
     waypoint[72].x_lat = land_lat;
     waypoint[72].y_long = land_lon;
-    waypoint[72].z_alt = 0;
-    waypoint[72].command = mavros_msgs::CommandCode::NAV_LAND; //降落命令
+    waypoint[72].z_alt = 30;
+    waypoint[72].command = mavros_msgs::CommandCode::NAV_DO_LAND_START; //降落开始点命令
     waypoint[72].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
     waypoint[72].autocontinue = true;
     waypoint[72].is_current = false;
+		  
+    double landloiter_x, landloiter_y;
+    add = ll2xy(land_lat, land_lon);
+    landloiter_x = add[0] + 30;
+    landloiter_y = add[1];
+    add = xy2ll(landloiter_x, landloiter_y);
+    waypoint[73].x_lat = add[0];
+    waypoint[73].y_long = add[1];
+    waypoint[73].z_alt = 30; ///说明param3为盘旋半径，逆时针
+    waypoint[73].param3 = -30;
+    waypoint[73].command = mavros_msgs::CommandCode::NAV_LOITER_UNLIM;
+    //    设置命令为盘旋点
+    waypoint[73].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+    waypoint[73].autocontinue = true;
+    waypoint[73].is_current = false;
+
+    double landend_x, landend_y;
+    landend_x=landloiter_x + 30;
+    landend_y = landloiter_y;
+    add = xy2ll(landend_x, landend_y);
+    waypoint[74].x_lat = add[0];
+    waypoint[74].y_long = add[1];
+    waypoint[74].z_alt = 0; 
+    waypoint[74].command = mavros_msgs::CommandCode::NAV_LAND;
+    //    设置命令为降落点
+    waypoint[74].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+    waypoint[74].autocontinue = true;
+    waypoint[74].is_current = false;  
     //--------------------------------------------------------------------降落部分
     break;
   }
@@ -724,8 +752,8 @@ void DROPPING_FW::run() {
   //调用航迹规划函数规划投弹机第二阶段航线
   plan_waypoint(2);
 
-  //完成第一段航线的push  size：2
-  push_waypoints_to_px4(73, waypoint);
+  //完成第一段航线的push  size：75
+  push_waypoints_to_px4(75, waypoint);
 
   //重启qgc !!!!!!!!!!!!!!!!脚本路径需修改
   /* system("sh /home/sss/qgc_restart.sh"); */
