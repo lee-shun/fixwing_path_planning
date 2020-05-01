@@ -104,6 +104,7 @@ void DROPPING_FW::ros_sub_pub() {
  * @Description: waypoint按照顺序逐次发给px4
  */
 void DROPPING_FW::push_waypoints_to_px4(int size, mavros_msgs::Waypoint *points) {
+
   mavros_msgs::WaypointPush waypoint_push;
 
   for (int i = 0; i < size; i++) {
@@ -245,7 +246,7 @@ void DROPPING_FW::plan_waypoint(int task_stage) {
     //盘旋点设置
     waypoint[1].x_lat = wei0;
     waypoint[1].y_long = jing0;
-    waypoint[0].z_alt = 30; ///说明param3为盘旋半径，逆时针
+    waypoint[1].z_alt = 30; ///说明param3为盘旋半径，逆时针
     waypoint[1].param3 = -30;
     //    waypoint[1].param4 = nan;
     waypoint[1].command = mavros_msgs::CommandCode::NAV_LOITER_UNLIM;
