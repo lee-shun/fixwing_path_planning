@@ -657,7 +657,7 @@ void DROPPING_FW::plan_waypoint(int task_stage) {
     waypoint[72].x_lat = land_lat;
     waypoint[72].y_long = land_lon;
     waypoint[72].z_alt = 30;
-    waypoint[72].command = mavros_msgs::CommandCode::NAV_DO_LAND_START; //降落开始点命令
+    waypoint[72].command = mavros_msgs::CommandCode::DO_LAND_START; //降落开始点命令
     waypoint[72].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
     waypoint[72].autocontinue = true;
     waypoint[72].is_current = false;
@@ -671,7 +671,7 @@ void DROPPING_FW::plan_waypoint(int task_stage) {
     waypoint[73].y_long = add[1];
     waypoint[73].z_alt = 30; ///说明param3为盘旋半径，逆时针
     waypoint[73].param3 = -30;
-    waypoint[73].command = mavros_msgs::CommandCode::NAV_LOITER_UNLIM;
+    waypoint[73].command = mavros_msgs::CommandCode::NAV_LOITER_TO_ALT;
     //    设置命令为盘旋点
     waypoint[73].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
     waypoint[73].autocontinue = true;
