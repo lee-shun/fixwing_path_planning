@@ -1799,7 +1799,7 @@ int main(int argc, char **argv)
     //######################################以上是航迹规划######################################
 
     //std::string res;
-    system("sh /home/sss/qgc_restart.sh");
+    /* system("sh /home/sss/qgc_restart.sh"); */
     std::cout << res << '\n';
 
 

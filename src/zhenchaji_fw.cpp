@@ -12,7 +12,7 @@
 
 #include "zhenchaji_fw.hpp"
 
-void DROPPING_FW::plan_waypoint(int task_stage)
+void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 {
 	int stage = task_stage;
 	switch (stage) {
@@ -24,8 +24,8 @@ void DROPPING_FW::plan_waypoint(int task_stage)
 		double runway_takeoff_length, runway_takeoff_angular;
 		wei0 = 39.9890143;
 		jing0 = 116.353457;
-		double w2 = 39.9897585, w1 = 39.9897833, w4 = 39.9882652, w3 = 39.9882500;
-		double j2 = 116.3526900, j1 = 116.3541295, j4 = 116.3542219, j3 = 116.3527874;
+		double w1 = 39.9897585, w2 = 39.9897833, w3 = 39.9882652, w4 = 39.9882500;
+		double j1 = 116.3526900, j2 = 116.3541295, j3 = 116.3542219, j4 = 116.3527874;
 		double *add1;
 		double *add2;
 		double *add3;
@@ -183,8 +183,9 @@ void DROPPING_FW::plan_waypoint(int task_stage)
 }
 }
 
-void DROPPING_FW::run()
+void ZHENCHAJI_FW::run()
 {
+    ros_sub_pub();
 	//清空航点
 	clear_waypoint();
 	double *add;
@@ -202,7 +203,7 @@ void DROPPING_FW::run()
 	push_waypoints_to_px4(52, waypoint);
 	//重启qgc !!!!!!!!!!!!!!!!脚本路径需修改
 	std::string res;
-	system("sh /home/sss/qgc_restart.sh");
+	/* system("sh /home/sss/qgc_restart.sh"); */
 	std::cout << res << '\n';
 	//起飞检测--------------------------------------------------------------
 	int mission_receive_flag = 1;
@@ -227,4 +228,15 @@ void DROPPING_FW::run()
 		
 }
 
-int main() { return 0; }
+int main(int argc, char **argv) {
+
+  ros::init(argc, argv, "zhenchaji_fw");
+
+  ZHENCHAJI_FW zhenchaji_fw;
+
+  zhenchaji_fw.set_planeID(-1);
+
+  zhenchaji_fw.run();
+
+  return 0;
+}
