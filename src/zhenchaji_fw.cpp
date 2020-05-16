@@ -24,8 +24,8 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		double runway_takeoff_length, runway_takeoff_angular;
 		wei0 = 39.9890143;
 		jing0 = 116.353457;
-		double w1 = 39.9897585, w2 = 39.9897833, w3 = 39.9882652, w4 = 39.9882500;
-		double j1 = 116.3526900, j2 = 116.3541295, j3 = 116.3542219, j4 = 116.3527874;
+		double w4 = 39.9897585, w3 = 39.9897833, w2 = 39.9882652, w1 = 39.9882500;
+		double j4 = 116.3526900, j3 = 116.3541295, j2 = 116.3542219, j1 = 116.3527874;
 		double *add1;
 		double *add2;
 		double *add3;
