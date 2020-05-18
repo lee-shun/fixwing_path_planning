@@ -69,14 +69,29 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		//设置飞机的起飞爬升角
 		waypoint[0].param1 = 45.0;
 
-		for (int i = 1; i <= 10; i++)
+		for (int i = 1; i <= 50; i++)
 		{
-			double x = w1_x+(w2_x-w1_x) / 6;
-			double y = w4_y-(w4_y - w1_y)*(i-1) / 9;
 			
-			add = xy2ll(x, y);
-			waypoint[i].x_lat = add[0];
-			waypoint[i].y_long = add[1];
+			if (i < 11)
+			{
+				waypoint[i].y_long = 116.3530264833333;
+			}
+			if (  (i>10)&&(i < 21)    )
+			{
+				waypoint[i].y_long = 116.353265566667;
+			}
+			if ((i>20) && (i < 31))
+			{
+				waypoint[i].y_long = 116.35350465;
+			}
+			if ((i>30) && (i < 41))
+			{
+				waypoint[i].y_long = 116.353743733333;
+			}
+			if ((i>40) && (i < 51))
+			{
+				waypoint[i].y_long = 116.353982816667;
+			}
 			waypoint[i].z_alt = 30;
 
 			waypoint[i].command = mavros_msgs::CommandCode::NAV_WAYPOINT;
@@ -85,70 +100,58 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 			waypoint[i].is_current = false;
 
 		}
-		for (int i = 11; i <= 20; i++)
-		{
-			double x = w1_x + ((w2_x - w1_x)*2)/6;
-			double y = w1_y + (w4_y - w1_y)*(i - 11) / 9;
-
-			add = xy2ll(x, y);
-			waypoint[i].x_lat = add[0];
-			waypoint[i].y_long = add[1];
-			waypoint[i].z_alt = 30;
-
-			waypoint[i].command = mavros_msgs::CommandCode::NAV_WAYPOINT;
-			waypoint[i].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
-			waypoint[i].autocontinue = true;
-			waypoint[i].is_current = false;
-
-		}
-		for (int i = 21; i <= 30; i++)
-		{
-			double x = w1_x + ((w2_x - w1_x)*3) / 6;
-			double y = w4_y - (w4_y - w1_y)*(i - 21) / 9;
-
-			add = xy2ll(x, y);
-			waypoint[i].x_lat = add[0];
-			waypoint[i].y_long = add[1];
-			waypoint[i].z_alt = 30;
-
-			waypoint[i].command = mavros_msgs::CommandCode::NAV_WAYPOINT;
-			waypoint[i].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
-			waypoint[i].autocontinue = true;
-			waypoint[i].is_current = false;
-
-		}
-		for (int i = 31; i <= 40; i++)
-		{
-			double x = w1_x + ((w2_x - w1_x) * 4) / 6;
-			double y = w1_y + (w4_y - w1_y)*(i - 31) / 9;
-
-			add = xy2ll(x, y);
-			waypoint[i].x_lat = add[0];
-			waypoint[i].y_long = add[1];
-			waypoint[i].z_alt = 30;
-
-			waypoint[i].command = mavros_msgs::CommandCode::NAV_WAYPOINT;
-			waypoint[i].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
-			waypoint[i].autocontinue = true;
-			waypoint[i].is_current = false;
-
-		}
-		for (int i = 41; i <= 50; i++)
-		{
-			double x = w1_x + ((w2_x - w1_x) * 5) / 6;
-			double y = w4_y - (w4_y - w1_y)*(i - 41) / 9;
-
-			add = xy2ll(x, y);
-			waypoint[i].x_lat = add[0];
-			waypoint[i].y_long = add[1];
-			waypoint[i].z_alt = 30;
-
-			waypoint[i].command = mavros_msgs::CommandCode::NAV_WAYPOINT;
-			waypoint[i].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
-			waypoint[i].autocontinue = true;
-			waypoint[i].is_current = false;
-
-		}
+		waypoint[1].x_lat = 39.9897585;
+		waypoint[2].x_lat = 39.9895908888889;
+		waypoint[3].x_lat = 39.9894232777778;
+		waypoint[4].x_lat = 39.9892556666667;
+		waypoint[5].x_lat = 39.9890880555556;
+		waypoint[6].x_lat = 39.9889204444444;
+		waypoint[7].x_lat = 39.9887528333333;
+		waypoint[8].x_lat = 39.9885852222222;
+		waypoint[9].x_lat = 39.9884176111111;
+		waypoint[10].x_lat = 39.98825;
+		waypoint[11].x_lat = 39.98825;
+		waypoint[12].x_lat = 39.9884176111111;
+		waypoint[13].x_lat = 39.9885852222222;
+		waypoint[14].x_lat = 39.9887528333333;
+		waypoint[15].x_lat = 39.9889204444444;
+		waypoint[16].x_lat = 39.9890880555556;
+		waypoint[17].x_lat = 39.9892556666667;
+		waypoint[18].x_lat = 39.9894232777778;
+		waypoint[19].x_lat = 39.9895908888889;
+		waypoint[20].x_lat = 39.9897585;
+		waypoint[21].x_lat = 39.9897585;
+		waypoint[22].x_lat = 39.9895908888889;
+		waypoint[23].x_lat = 39.9894232777778;
+		waypoint[24].x_lat = 39.9892556666667;
+		waypoint[25].x_lat = 39.9890880555556;
+		waypoint[26].x_lat = 39.9889204444444;
+		waypoint[27].x_lat = 39.9887528333333;
+		waypoint[28].x_lat = 39.9885852222222;
+		waypoint[29].x_lat = 39.9884176111111;
+		waypoint[30].x_lat = 39.98825;
+		waypoint[31].x_lat = 39.98825;
+		waypoint[32].x_lat = 39.9884176111111;
+		waypoint[33].x_lat = 39.9885852222222;
+		waypoint[34].x_lat = 39.9887528333333;
+		waypoint[35].x_lat = 39.9889204444444;
+		waypoint[36].x_lat = 39.9890880555556;
+		waypoint[37].x_lat = 39.9892556666667;
+		waypoint[38].x_lat = 39.9894232777778;
+		waypoint[39].x_lat = 39.9895908888889;
+		waypoint[40].x_lat = 39.9897585;
+		waypoint[41].x_lat = 39.9897585;
+		waypoint[42].x_lat = 39.9895908888889;
+		waypoint[43].x_lat = 39.9894232777778;
+		waypoint[44].x_lat = 39.9892556666667;
+		waypoint[45].x_lat = 39.9890880555556;
+		waypoint[46].x_lat = 39.9889204444444;
+		waypoint[47].x_lat = 39.9887528333333;
+		waypoint[48].x_lat = 39.9885852222222;
+		waypoint[49].x_lat = 39.9884176111111;
+		waypoint[50].x_lat = 39.98825;
+	
+		
 		//降落点 ---------------------------
 		double land_lat, land_lon;
 		double land_x, land_y;
