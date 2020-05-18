@@ -73,26 +73,7 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		for (int i = 1; i <= 50; i++)
 		{
 			
-			if (i < 11)
-			{
-				waypoint[i].y_long = 116.3530264833333;
-			}
-			if (  (i>10)&&(i < 21)    )
-			{
-				waypoint[i].y_long = 116.353265566667;
-			}
-			if ((i>20) && (i < 31))
-			{
-				waypoint[i].y_long = 116.35350465;
-			}
-			if ((i>30) && (i < 41))
-			{
-				waypoint[i].y_long = 116.353743733333;
-			}
-			if ((i>40) && (i < 51))
-			{
-				waypoint[i].y_long = 116.353982816667;
-			}
+			
 			waypoint[i].z_alt = 30;
 
 			waypoint[i].command = mavros_msgs::CommandCode::NAV_WAYPOINT;
@@ -102,55 +83,36 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 
 		}
 		waypoint[1].x_lat = 39.9897585;
-		waypoint[2].x_lat = 39.9895908888889;
-		waypoint[3].x_lat = 39.9894232777778;
-		waypoint[4].x_lat = 39.9892556666667;
-		waypoint[5].x_lat = 39.9890880555556;
-		waypoint[6].x_lat = 39.9889204444444;
+		waypoint[1].y_long = 116.3527874;	
+		waypoint[2].x_lat = 39.9892556666667;
+		waypoint[2].y_long = 116.3527874;
+		waypoint[3].x_lat = 39.9887528333333;
+		waypoint[3].y_long = 116.3527874;
+		waypoint[4].x_lat = 39.98825;
+		waypoint[4].y_long = 116.3527874;
+		waypoint[5].x_lat = 39.9879985833333;
+		waypoint[5].y_long = 116.353146025;
+		waypoint[6].x_lat = 39.98825;
+		waypoint[6].y_long = 116.35350465;
 		waypoint[7].x_lat = 39.9887528333333;
-		waypoint[8].x_lat = 39.9885852222222;
-		waypoint[9].x_lat = 39.9884176111111;
-		waypoint[10].x_lat = 39.98825;
-		waypoint[11].x_lat = 39.98825;
-		waypoint[12].x_lat = 39.9884176111111;
-		waypoint[13].x_lat = 39.9885852222222;
-		waypoint[14].x_lat = 39.9887528333333;
-		waypoint[15].x_lat = 39.9889204444444;
-		waypoint[16].x_lat = 39.9890880555556;
-		waypoint[17].x_lat = 39.9892556666667;
-		waypoint[18].x_lat = 39.9894232777778;
-		waypoint[19].x_lat = 39.9895908888889;
-		waypoint[20].x_lat = 39.9897585;
-		waypoint[21].x_lat = 39.9897585;
-		waypoint[22].x_lat = 39.9895908888889;
-		waypoint[23].x_lat = 39.9894232777778;
-		waypoint[24].x_lat = 39.9892556666667;
-		waypoint[25].x_lat = 39.9890880555556;
-		waypoint[26].x_lat = 39.9889204444444;
-		waypoint[27].x_lat = 39.9887528333333;
-		waypoint[28].x_lat = 39.9885852222222;
-		waypoint[29].x_lat = 39.9884176111111;
-		waypoint[30].x_lat = 39.98825;
-		waypoint[31].x_lat = 39.98825;
-		waypoint[32].x_lat = 39.9884176111111;
-		waypoint[33].x_lat = 39.9885852222222;
-		waypoint[34].x_lat = 39.9887528333333;
-		waypoint[35].x_lat = 39.9889204444444;
-		waypoint[36].x_lat = 39.9890880555556;
-		waypoint[37].x_lat = 39.9892556666667;
-		waypoint[38].x_lat = 39.9894232777778;
-		waypoint[39].x_lat = 39.9895908888889;
-		waypoint[40].x_lat = 39.9897585;
-		waypoint[41].x_lat = 39.9897585;
-		waypoint[42].x_lat = 39.9895908888889;
-		waypoint[43].x_lat = 39.9894232777778;
-		waypoint[44].x_lat = 39.9892556666667;
-		waypoint[45].x_lat = 39.9890880555556;
-		waypoint[46].x_lat = 39.9889204444444;
-		waypoint[47].x_lat = 39.9887528333333;
-		waypoint[48].x_lat = 39.9885852222222;
-		waypoint[49].x_lat = 39.9884176111111;
-		waypoint[50].x_lat = 39.98825;
+		waypoint[7].y_long = 116.35350465;
+		waypoint[8].x_lat = 39.9892556666667;
+		waypoint[8].y_long = 116.35350465;
+		waypoint[9].x_lat = 39.9897585;
+		waypoint[9].y_long = 116.35350465;
+		waypoint[10].x_lat = 39.9900099166667;
+		waypoint[10].y_long = 116.353863275;
+		waypoint[11].x_lat = 39.9897585;
+		waypoint[11].y_long = 116.3542219;
+		waypoint[12].x_lat = 39.9892556666667;
+		waypoint[12].y_long = 116.3542219;
+		waypoint[13].x_lat = 39.9887528333333;
+		waypoint[13].y_long = 116.3542219;
+		waypoint[14].x_lat = 39.98825;
+		waypoint[14].y_long = 116.3542219;
+		waypoint[15].x_lat = 39.9880063;
+		waypoint[15].y_long = 116.3547633;
+		
 	
 		
 		//降落点 ---------------------------
@@ -174,13 +136,13 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		//    land_lat=39.9890093;
 		//    land_lon=116.3498190;
 
-		waypoint[51].x_lat = land_lat;
-		waypoint[51].y_long = land_lon;
-		waypoint[51].z_alt = 0;
-		waypoint[51].command = mavros_msgs::CommandCode::NAV_LAND;
-		waypoint[51].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
-		waypoint[51].autocontinue = true;
-		waypoint[51].is_current = false;
+		waypoint[16].x_lat = 39.9888508;
+		waypoint[16].y_long = 116.3573833;
+		waypoint[16].z_alt = 0;
+		waypoint[16].command = mavros_msgs::CommandCode::NAV_LAND;
+		waypoint[16].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+		waypoint[16].autocontinue = true;
+		waypoint[16].is_current = false;
 	        break;
 		//------------------------------------------------------------
 		
@@ -203,8 +165,8 @@ void ZHENCHAJI_FW::run()
 	}
 	//调用航迹规划函数规划侦察航线
 	plan_waypoint(1);
-	//完成航线的push  size：52
-	push_waypoints_to_px4(52, waypoint);
+	//完成航线的push  size：17
+	push_waypoints_to_px4(17, waypoint);
 	//重启qgc !!!!!!!!!!!!!!!!脚本路径需修改
 	std::string res;
 	/* system("sh /home/sss/qgc_restart.sh"); */
