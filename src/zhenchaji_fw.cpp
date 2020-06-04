@@ -145,7 +145,358 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		waypoint[16].is_current = false;
 	        break;
 		//------------------------------------------------------------
-		
+	case 2://直线轨迹跟踪
+		double *add;
+		double home_lat, home_long, home_x, home_y;
+		double takeoff_x, takeoff_y;
+		double runway_takeoff_length, runway_takeoff_angular;
+		//home点设置？
+		home_lat = 39.9891248;
+		home_long = 116.3558232;
+		runway_takeoff_length = 100;
+		runway_takeoff_angular = 0;
+		//起飞点经纬获取
+		add = ll2xy(home_lat, home_long);
+		home_x = add[0];
+		home_y = add[1];
+		takeoff_x = home_x + runway_takeoff_length*cos(runway_takeoff_angular);
+		takeoff_y = home_y + runway_takeoff_length*sin(runway_takeoff_angular);
+		add = xy2ll(takeoff_x, takeoff_y);
+		//起飞点设置：经纬高
+		waypoint[0].x_lat = add[0];
+		waypoint[0].y_long = add[1];
+		waypoint[0].z_alt = 30;
+		waypoint[0].command = mavros_msgs::CommandCode::NAV_TAKEOFF;
+		//设置坐标系，通常选FRAME_GLOBAL_REL_ALT（3）
+		waypoint[0].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+		//第一个点的autocontinue必设置为true()默认为false
+		waypoint[0].autocontinue = true;
+		waypoint[0].is_current = true;
+		//设置飞机的起飞爬升角
+		waypoint[0].param1 = 45.0;
+		for (int i = 1; i <= 12; i++)
+		{
+
+
+			waypoint[i].z_alt = 30;
+
+			waypoint[i].command = mavros_msgs::CommandCode::NAV_WAYPOINT;
+			waypoint[i].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+			waypoint[i].autocontinue = true;
+			waypoint[i].is_current = false;
+
+		}
+		waypoint[1].x_lat = 39.9891248;
+		waypoint[1].y_long = 116.357232394997;
+		waypoint[2].x_lat = 39.9891248;
+		waypoint[2].y_long = 116.35746726083;
+		waypoint[3].x_lat = 39.9891248;
+		waypoint[3].y_long = 116.357702126663;
+		waypoint[4].x_lat = 39.9891248;
+		waypoint[4].y_long = 116.357936992496;
+		waypoint[5].x_lat = 39.9891248;
+		waypoint[5].y_long = 116.358171858329;
+		waypoint[6].x_lat = 39.9887650133535;
+		waypoint[6].y_long = 116.358406724162;
+		waypoint[7].x_lat = 39.9887650133535;
+		waypoint[7].y_long = 116.358641589995;
+		waypoint[8].x_lat = 39.9887650133535;
+		waypoint[8].y_long = 116.358876455828;
+		waypoint[9].x_lat = 39.9887650133535;
+		waypoint[9].y_long = 116.359111321661;
+		waypoint[10].x_lat = 39.9887650133535;
+		waypoint[10].y_long = 116.359346187493;
+		waypoint[11].x_lat = 39.9887650133535;
+		waypoint[11].y_long = 116.359581053326;
+		waypoint[12].x_lat = 39.9880063;
+		waypoint[12].y_long = 116.3547633;
+
+		//降落点 ---------------------------
+		double land_lat, land_lon;
+		double land_x, land_y;
+		double theta, dland;
+		theta = 0;//降落方向
+		dland = 300;//最后的直线长
+		double land_length = 20;
+		land_x = home_x - land_length*cos(theta);
+		land_y = home_y - land_length*sin(theta);
+		add = xy2ll(land_x, land_y);
+		land_lat = add[0];
+		land_lon = add[1];
+		//着陆点与起飞点不一致
+		//    land_lat= 39.9890093;
+		//    land_lon= 116.3498190;
+		//    add=ll2xy(land_lat,land_lon);
+		//    land_x = add[0];
+		//    land_y = add[1];
+		//    land_lat=39.9890093;
+		//    land_lon=116.3498190;
+
+		waypoint[13].x_lat = 39.9888508;
+		waypoint[13].y_long = 116.3573833;
+		waypoint[13].z_alt = 0;
+		waypoint[13].command = mavros_msgs::CommandCode::NAV_LAND;
+		waypoint[13].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+		waypoint[13].autocontinue = true;
+		waypoint[13].is_current = false;
+		break;
+	case 3://圆轨迹跟踪
+		double *add;
+		double home_lat, home_long, home_x, home_y;
+		double takeoff_x, takeoff_y;
+		double runway_takeoff_length, runway_takeoff_angular;
+		//home点设置？
+		home_lat = 39.9891248;
+		home_long = 116.3558232;
+		runway_takeoff_length = 100;
+		runway_takeoff_angular = 0;
+		//起飞点经纬获取
+		add = ll2xy(home_lat, home_long);
+		home_x = add[0];
+		home_y = add[1];
+		takeoff_x = home_x + runway_takeoff_length*cos(runway_takeoff_angular);
+		takeoff_y = home_y + runway_takeoff_length*sin(runway_takeoff_angular);
+		add = xy2ll(takeoff_x, takeoff_y);
+		//起飞点设置：经纬高
+		waypoint[0].x_lat = add[0];
+		waypoint[0].y_long = add[1];
+		waypoint[0].z_alt = 30;
+		waypoint[0].command = mavros_msgs::CommandCode::NAV_TAKEOFF;
+		//设置坐标系，通常选FRAME_GLOBAL_REL_ALT（3）
+		waypoint[0].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+		//第一个点的autocontinue必设置为true()默认为false
+		waypoint[0].autocontinue = true;
+		waypoint[0].is_current = true;
+		//设置飞机的起飞爬升角
+		waypoint[0].param1 = 45.0;
+		for (int i = 1; i <= 25; i++)
+		{
+
+
+			waypoint[i].z_alt = 30;
+
+			waypoint[i].command = mavros_msgs::CommandCode::NAV_WAYPOINT;
+			waypoint[i].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+			waypoint[i].autocontinue = true;
+			waypoint[i].is_current = false;
+
+		}
+		waypoint[1].x_lat = 39.9895745333082;
+		waypoint[1].y_long = 116.356997529164;
+		waypoint[2].x_lat = 39.9900242666163;
+		waypoint[2].y_long = 116.356997529164;
+		waypoint[3].x_lat = 39.9904739999245;
+		waypoint[3].y_long = 116.356997529164;
+		waypoint[4].x_lat = 39.9909237332326;
+		waypoint[4].y_long = 116.356997529164;
+		waypoint[5].x_lat = 39.9913734665407;
+		waypoint[5].y_long = 116.356997529164;
+		waypoint[6].x_lat = 39.9918231998489;
+		waypoint[6].y_long = 116.356997529164;
+		waypoint[7].x_lat = 39.9922612843482;
+		waypoint[7].y_long = 116.356902086575;
+		waypoint[8].x_lat = 39.9926518955944;
+		waypoint[8].y_long = 116.35662610149;
+		waypoint[9].x_lat = 39.9929527047981;
+		waypoint[9].y_long = 116.356199481178;
+		waypoint[10].x_lat = 39.9931311146145;
+		waypoint[10].y_long = 116.355668456568;
+		waypoint[11].x_lat = 39.9931677915716;
+		waypoint[11].y_long = 116.355090572417;
+		waypoint[12].x_lat = 39.993058761152;
+		waypoint[12].y_long = 116.354528451439;
+		waypoint[13].x_lat = 39.9928158384936;
+		waypoint[13].y_long = 116.354043008165;
+		waypoint[14].x_lat = 39.9924653480356;
+		waypoint[14].y_long = 116.353686847905;
+		waypoint[15].x_lat = 39.9920452708577;
+		waypoint[15].y_long = 116.35349856615;
+		waypoint[16].x_lat = 39.9916011288401;
+		waypoint[16].y_long = 116.35349856615;
+		waypoint[17].x_lat = 39.9911810516622;
+		waypoint[17].y_long = 116.353686847905;
+		waypoint[18].x_lat = 39.9908305612042;
+		waypoint[18].y_long = 116.354043008165;
+		waypoint[19].x_lat = 39.9905876385458;
+		waypoint[19].y_long = 116.354528451439;
+		waypoint[20].x_lat = 39.9904786081262;
+		waypoint[20].y_long = 116.355090572417;
+		waypoint[21].x_lat = 39.9905152850833;
+		waypoint[21].y_long = 116.355668456568;
+		waypoint[22].x_lat = 39.9906936948997;
+		waypoint[22].y_long = 116.356199481178;
+		waypoint[23].x_lat = 39.9909945041033;
+		waypoint[23].y_long = 116.35662610149;
+		waypoint[24].x_lat = 39.9913851153496;
+		waypoint[24].y_long = 116.356902086575;
+		waypoint[25].x_lat = 39.9880063;
+		waypoint[25].y_long = 116.3547633;
+
+		//降落点 ---------------------------
+		double land_lat, land_lon;
+		double land_x, land_y;
+		double theta, dland;
+		theta = 0;//降落方向
+		dland = 300;//最后的直线长
+		double land_length = 20;
+		land_x = home_x - land_length*cos(theta);
+		land_y = home_y - land_length*sin(theta);
+		add = xy2ll(land_x, land_y);
+		land_lat = add[0];
+		land_lon = add[1];
+		//着陆点与起飞点不一致
+		//    land_lat= 39.9890093;
+		//    land_lon= 116.3498190;
+		//    add=ll2xy(land_lat,land_lon);
+		//    land_x = add[0];
+		//    land_y = add[1];
+		//    land_lat=39.9890093;
+		//    land_lon=116.3498190;
+
+		waypoint[26].x_lat = 39.9888508;
+		waypoint[26].y_long = 116.3573833;
+		waypoint[26].z_alt = 0;
+		waypoint[26].command = mavros_msgs::CommandCode::NAV_LAND;
+		waypoint[26].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+		waypoint[26].autocontinue = true;
+		waypoint[26].is_current = false;
+		break;
+	case 4:
+		double *add;
+		double home_lat, home_long, home_x, home_y;
+		double takeoff_x, takeoff_y;
+		double runway_takeoff_length, runway_takeoff_angular;
+		//home点设置？
+		home_lat = 39.9891248;
+		home_long = 116.3558232;
+		runway_takeoff_length = 100;
+		runway_takeoff_angular = 0;
+		//起飞点经纬获取
+		add = ll2xy(home_lat, home_long);
+		home_x = add[0];
+		home_y = add[1];
+		takeoff_x = home_x + runway_takeoff_length*cos(runway_takeoff_angular);
+		takeoff_y = home_y + runway_takeoff_length*sin(runway_takeoff_angular);
+		add = xy2ll(takeoff_x, takeoff_y);
+		//起飞点设置：经纬高
+		waypoint[0].x_lat = add[0];
+		waypoint[0].y_long = add[1];
+		waypoint[0].z_alt = 30;
+		waypoint[0].command = mavros_msgs::CommandCode::NAV_TAKEOFF;
+		//设置坐标系，通常选FRAME_GLOBAL_REL_ALT（3）
+		waypoint[0].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+		//第一个点的autocontinue必设置为true()默认为false
+		waypoint[0].autocontinue = true;
+		waypoint[0].is_current = true;
+		//设置飞机的起飞爬升角
+		waypoint[0].param1 = 45.0;
+		for (int i = 1; i <= 25; i++)
+		{
+
+
+			waypoint[i].z_alt = 30;
+
+			waypoint[i].command = mavros_msgs::CommandCode::NAV_WAYPOINT;
+			waypoint[i].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+			waypoint[i].autocontinue = true;
+			waypoint[i].is_current = false;
+
+		}
+		waypoint[1].x_lat = 39.9890143;
+		waypoint[1].y_long = 116.356979987493;
+		waypoint[2].x_lat = 39.9899137666163;
+		waypoint[2].y_long = 116.356979987493;
+		waypoint[3].x_lat = 39.9908132332326;
+		waypoint[3].y_long = 116.356979987493;
+		waypoint[4].x_lat = 39.9912629665407;
+		waypoint[4].y_long = 116.356979987493;
+		waypoint[5].x_lat = 39.9917126998489;
+		waypoint[5].y_long = 116.356979987493;
+		waypoint[6].x_lat = 39.992162433157;
+		waypoint[6].y_long = 116.356979987493;
+		waypoint[7].x_lat = 39.9929629584455;
+		waypoint[7].y_long = 116.356756864952;
+		waypoint[8].x_lat = 39.9939613663896;
+		waypoint[8].y_long = 116.356392822911;
+		waypoint[9].x_lat = 39.994590993021;
+		waypoint[9].y_long = 116.356040524162;
+		waypoint[10].x_lat = 39.9951306729908;
+		waypoint[10].y_long = 116.355570792496;
+		waypoint[11].x_lat = 39.995418502308;
+		waypoint[11].y_long = 116.355247851976;
+		waypoint[12].x_lat = 39.9959815684098;
+		waypoint[12].y_long = 116.353973704832;
+		waypoint[13].x_lat = 39.9964798729153;
+		waypoint[13].y_long = 116.352846348834;
+		waypoint[14].x_lat = 39.9969296062234;
+		waypoint[14].y_long = 116.351830554107;
+		waypoint[15].x_lat = 39.9972893928699;
+		waypoint[15].y_long = 116.351014395338;
+		waypoint[16].x_lat = 39.9975592328548;
+		waypoint[16].y_long = 116.350403744172;
+		waypoint[17].x_lat = 39.9980925411791;
+		waypoint[17].y_long = 116.349191097112;
+		waypoint[18].x_lat = 39.998389890873;
+		waypoint[18].y_long = 116.348306056095;
+		waypoint[19].x_lat = 39.9984510191348;
+		waypoint[19].y_long = 116.347342915843;
+		waypoint[20].x_lat = 39.9982693017689;
+		waypoint[20].y_long = 116.346406047547;
+		waypoint[21].x_lat = 39.9978644306715;
+		waypoint[21].y_long = 116.345596975422;
+		waypoint[22].x_lat = 39.9972802799082;
+		waypoint[22].y_long = 116.345003374989;
+		waypoint[23].x_lat = 39.9965801512783;
+		waypoint[23].y_long = 116.344689572064;
+		waypoint[24].x_lat = 39.9958399145824;
+		waypoint[24].y_long = 116.344689572064;
+		waypoint[25].x_lat = 39.9951397859525;
+		waypoint[25].y_long = 116.345003374989;
+		waypoint[26].x_lat = 39.9945556351892;
+		waypoint[26].y_long = 116.345596975422;
+		waypoint[27].x_lat = 39.9941507640918;
+		waypoint[27].y_long = 116.346406047547;
+		waypoint[28].x_lat = 39.9939690467259;
+		waypoint[28].y_long = 116.347342915843;
+		waypoint[29].x_lat = 39.9940301749878;
+		waypoint[29].y_long = 116.348306056095;
+		waypoint[30].x_lat = 39.9943275246817;
+		waypoint[30].y_long = 116.349191097112;
+		waypoint[31].x_lat = 39.9948288733545;
+		waypoint[31].y_long = 116.349902130965;
+		waypoint[32].x_lat = 39.9880063;
+		waypoint[32].y_long = 116.3547633;
+
+		//降落点 ---------------------------
+		double land_lat, land_lon;
+		double land_x, land_y;
+		double theta, dland;
+		theta = 0;//降落方向
+		dland = 300;//最后的直线长
+		double land_length = 20;
+		land_x = home_x - land_length*cos(theta);
+		land_y = home_y - land_length*sin(theta);
+		add = xy2ll(land_x, land_y);
+		land_lat = add[0];
+		land_lon = add[1];
+		//着陆点与起飞点不一致
+		//    land_lat= 39.9890093;
+		//    land_lon= 116.3498190;
+		//    add=ll2xy(land_lat,land_lon);
+		//    land_x = add[0];
+		//    land_y = add[1];
+		//    land_lat=39.9890093;
+		//    land_lon=116.3498190;
+
+		waypoint[33].x_lat = 39.9888508;
+		waypoint[33].y_long = 116.3573833;
+		waypoint[33].z_alt = 0;
+		waypoint[33].command = mavros_msgs::CommandCode::NAV_LAND;
+		waypoint[33].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+		waypoint[33].autocontinue = true;
+		waypoint[33].is_current = false;
+		break;
+		//------------------------------------------------------------	
 }
 }
 
@@ -163,10 +514,36 @@ void ZHENCHAJI_FW::run()
 		ROS_INFO("%d", Current_wp.response.success);
 		ROS_INFO("Waypoint set to 0 success");
 	}
-	//调用航迹规划函数规划侦察航线
-	plan_waypoint(1);
-	//完成航线的push  size：17
-	push_waypoints_to_px4(17, waypoint);
+	int flag;
+	cin >> flag;
+	if (flag == 1)
+	{
+		//调用航迹规划函数规划侦察航线
+		plan_waypoint(1);
+		//完成航线的push  size：17
+		push_waypoints_to_px4(17, waypoint);
+	}
+	if (flag == 2)
+	{
+		//调用航迹规划函数规划侦察航线
+		plan_waypoint(2);
+		//完成航线的push  size：14
+		push_waypoints_to_px4(14, waypoint);
+	}
+	if (flag == 3)
+	{
+		//调用航迹规划函数规划侦察航线
+		plan_waypoint(3);
+		//完成航线的push  size：27
+		push_waypoints_to_px4(27, waypoint);
+	}
+	if (flag == 4)
+	{
+		//调用航迹规划函数规划侦察航线
+		plan_waypoint(4);
+		//完成航线的push  size：17
+		push_waypoints_to_px4(34, waypoint);
+	}
 	//重启qgc !!!!!!!!!!!!!!!!脚本路径需修改
 	std::string res;
 	/* system("sh /home/sss/qgc_restart.sh"); */
