@@ -17,8 +17,6 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 {
 	int stage = task_stage;
 	switch (stage) {
-	case 1://侦察机第一阶段航迹规划 起飞点加第一段侦察航线及最后的盘旋点设置
-		//定义变量
 		double *add;
 		double home_lat, home_long, home_x, home_y;
 		double takeoff_x, takeoff_y;
@@ -32,6 +30,9 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		double *add3;
 		double *add4;
 		double w1_x, w2_x, w3_x, w4_x, w1_y, w2_y, w3_y, w4_y;
+	case 1://侦察机第一阶段航迹规划 起飞点加第一段侦察航线及最后的盘旋点设置
+		//定义变量
+		
 		add1 = ll2xy(w1, j1);
 		add2 = ll2xy(w2, j2);
 		add3 = ll2xy(w3, j3);
@@ -116,25 +117,7 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 	
 		
 		//降落点 ---------------------------
-		double land_lat, land_lon;
-		double land_x, land_y;
-		double theta, dland;
-		theta = 0;//降落方向
-		dland = 300;//最后的直线长
-		double land_length = 20;
-		land_x = home_x - land_length*cos(theta);
-		land_y = home_y - land_length*sin(theta);
-		add = xy2ll(land_x, land_y);
-		land_lat = add[0];
-		land_lon = add[1];
-		//着陆点与起飞点不一致
-		//    land_lat= 39.9890093;
-		//    land_lon= 116.3498190;
-		//    add=ll2xy(land_lat,land_lon);
-		//    land_x = add[0];
-		//    land_y = add[1];
-		//    land_lat=39.9890093;
-		//    land_lon=116.3498190;
+		
 
 		waypoint[16].x_lat = 39.9888508;
 		waypoint[16].y_long = 116.3573833;
@@ -146,10 +129,6 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 	        break;
 		//------------------------------------------------------------
 	case 2://直线轨迹跟踪
-		double *add;
-		double home_lat, home_long, home_x, home_y;
-		double takeoff_x, takeoff_y;
-		double runway_takeoff_length, runway_takeoff_angular;
 		//home点设置？
 		home_lat = 39.9891248;
 		home_long = 116.3558232;
@@ -212,25 +191,7 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		waypoint[12].y_long = 116.3547633;
 
 		//降落点 ---------------------------
-		double land_lat, land_lon;
-		double land_x, land_y;
-		double theta, dland;
-		theta = 0;//降落方向
-		dland = 300;//最后的直线长
-		double land_length = 20;
-		land_x = home_x - land_length*cos(theta);
-		land_y = home_y - land_length*sin(theta);
-		add = xy2ll(land_x, land_y);
-		land_lat = add[0];
-		land_lon = add[1];
-		//着陆点与起飞点不一致
-		//    land_lat= 39.9890093;
-		//    land_lon= 116.3498190;
-		//    add=ll2xy(land_lat,land_lon);
-		//    land_x = add[0];
-		//    land_y = add[1];
-		//    land_lat=39.9890093;
-		//    land_lon=116.3498190;
+		
 
 		waypoint[13].x_lat = 39.9888508;
 		waypoint[13].y_long = 116.3573833;
@@ -241,10 +202,6 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		waypoint[13].is_current = false;
 		break;
 	case 3://圆轨迹跟踪
-		double *add;
-		double home_lat, home_long, home_x, home_y;
-		double takeoff_x, takeoff_y;
-		double runway_takeoff_length, runway_takeoff_angular;
 		//home点设置？
 		home_lat = 39.9891248;
 		home_long = 116.3558232;
@@ -333,25 +290,6 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		waypoint[25].y_long = 116.3547633;
 
 		//降落点 ---------------------------
-		double land_lat, land_lon;
-		double land_x, land_y;
-		double theta, dland;
-		theta = 0;//降落方向
-		dland = 300;//最后的直线长
-		double land_length = 20;
-		land_x = home_x - land_length*cos(theta);
-		land_y = home_y - land_length*sin(theta);
-		add = xy2ll(land_x, land_y);
-		land_lat = add[0];
-		land_lon = add[1];
-		//着陆点与起飞点不一致
-		//    land_lat= 39.9890093;
-		//    land_lon= 116.3498190;
-		//    add=ll2xy(land_lat,land_lon);
-		//    land_x = add[0];
-		//    land_y = add[1];
-		//    land_lat=39.9890093;
-		//    land_lon=116.3498190;
 
 		waypoint[26].x_lat = 39.9888508;
 		waypoint[26].y_long = 116.3573833;
@@ -362,10 +300,6 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		waypoint[26].is_current = false;
 		break;
 	case 4:
-		double *add;
-		double home_lat, home_long, home_x, home_y;
-		double takeoff_x, takeoff_y;
-		double runway_takeoff_length, runway_takeoff_angular;
 		//home点设置？
 		home_lat = 39.9891248;
 		home_long = 116.3558232;
@@ -468,26 +402,6 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		waypoint[32].y_long = 116.3547633;
 
 		//降落点 ---------------------------
-		double land_lat, land_lon;
-		double land_x, land_y;
-		double theta, dland;
-		theta = 0;//降落方向
-		dland = 300;//最后的直线长
-		double land_length = 20;
-		land_x = home_x - land_length*cos(theta);
-		land_y = home_y - land_length*sin(theta);
-		add = xy2ll(land_x, land_y);
-		land_lat = add[0];
-		land_lon = add[1];
-		//着陆点与起飞点不一致
-		//    land_lat= 39.9890093;
-		//    land_lon= 116.3498190;
-		//    add=ll2xy(land_lat,land_lon);
-		//    land_x = add[0];
-		//    land_y = add[1];
-		//    land_lat=39.9890093;
-		//    land_lon=116.3498190;
-
 		waypoint[33].x_lat = 39.9888508;
 		waypoint[33].y_long = 116.3573833;
 		waypoint[33].z_alt = 0;
