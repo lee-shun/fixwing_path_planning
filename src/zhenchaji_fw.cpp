@@ -16,7 +16,6 @@
 void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 {
 	int stage = task_stage;
-	switch (stage) {
 		double *add;
 		double home_lat, home_long, home_x, home_y;
 		double takeoff_x, takeoff_y;
@@ -30,6 +29,7 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		double *add3;
 		double *add4;
 		double w1_x, w2_x, w3_x, w4_x, w1_y, w2_y, w3_y, w4_y;
+	switch (stage) {
 	case 1://侦察机第一阶段航迹规划 起飞点加第一段侦察航线及最后的盘旋点设置
 		//定义变量
 		
