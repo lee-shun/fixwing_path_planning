@@ -166,27 +166,27 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 
 		}
 		waypoint[1].x_lat = 39.9891248;
-		waypoint[1].y_long = 116.357232394997;
+		waypoint[1].y_long = 116.358171858329;
 		waypoint[2].x_lat = 39.9891248;
-		waypoint[2].y_long = 116.35746726083;
+		waypoint[2].y_long = 116.359346187493;
 		waypoint[3].x_lat = 39.9891248;
-		waypoint[3].y_long = 116.357702126663;
+		waypoint[3].y_long = 116.360520516658;
 		waypoint[4].x_lat = 39.9891248;
-		waypoint[4].y_long = 116.357936992496;
+		waypoint[4].y_long = 116.361694845822;
 		waypoint[5].x_lat = 39.9891248;
-		waypoint[5].y_long = 116.358171858329;
-		waypoint[6].x_lat = 39.9887650133535;
-		waypoint[6].y_long = 116.358406724162;
-		waypoint[7].x_lat = 39.9887650133535;
-		waypoint[7].y_long = 116.358641589995;
-		waypoint[8].x_lat = 39.9887650133535;
-		waypoint[8].y_long = 116.358876455828;
-		waypoint[9].x_lat = 39.9887650133535;
-		waypoint[9].y_long = 116.359111321661;
-		waypoint[10].x_lat = 39.9887650133535;
-		waypoint[10].y_long = 116.359346187493;
-		waypoint[11].x_lat = 39.9887650133535;
-		waypoint[11].y_long = 116.359581053326;
+		waypoint[5].y_long = 116.362869174987;
+		waypoint[6].x_lat = 39.9876856534139;
+		waypoint[6].y_long = 116.363808638318;
+		waypoint[7].x_lat = 39.9876856534139;
+		waypoint[7].y_long = 116.36474810165;
+		waypoint[8].x_lat = 39.9876856534139;
+		waypoint[8].y_long = 116.365687564982;
+		waypoint[9].x_lat = 39.9876856534139;
+		waypoint[9].y_long = 116.366627028313;
+		waypoint[10].x_lat = 39.9876856534139;
+		waypoint[10].y_long = 116.367566491645;
+		waypoint[11].x_lat = 39.9876856534139;
+		waypoint[11].y_long = 116.368505954976;
 		waypoint[12].x_lat = 39.9880063;
 		waypoint[12].y_long = 116.3547633;
 
@@ -324,7 +324,7 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		waypoint[0].is_current = true;
 		//设置飞机的起飞爬升角
 		waypoint[0].param1 = 45.0;
-		for (int i = 1; i <= 25; i++)
+		for (int i = 1; i <= 40; i++)
 		{
 
 
@@ -398,17 +398,33 @@ void ZHENCHAJI_FW::plan_waypoint(int task_stage)
 		waypoint[30].y_long = 116.349191097112;
 		waypoint[31].x_lat = 39.9948288733545;
 		waypoint[31].y_long = 116.349902130965;
-		waypoint[32].x_lat = 39.9880063;
-		waypoint[32].y_long = 116.3547633;
 
+		waypoint[32].x_lat = 39.9948288733545;
+		waypoint[32].y_long = 116.35108708731;
+		waypoint[33].x_lat = 39.9948288733545;
+		waypoint[33].y_long = 116.352272043655;
+		waypoint[34].x_lat = 39.9948288733545;
+		waypoint[34].y_long = 116.353457;
+		waypoint[35].x_lat = 39.9933752300158;
+		waypoint[35].y_long = 116.353457	;
+		waypoint[36].x_lat = 39.9919215866772;
+		waypoint[36].y_long = 116.353457;
+		waypoint[37].x_lat = 39.9904679433386;
+		waypoint[37].y_long = 116.353457;
+		waypoint[38].x_lat = 39.9890143;
+		waypoint[38].y_long = 116.353457;
+		waypoint[39].x_lat = 39.98825;
+		waypoint[39].y_long = 116.3542219;
+		waypoint[40].x_lat = 39.9880063;
+		waypoint[40].y_long = 116.3547633;
 		//降落点 ---------------------------
-		waypoint[33].x_lat = 39.9888508;
-		waypoint[33].y_long = 116.3573833;
-		waypoint[33].z_alt = 0;
-		waypoint[33].command = mavros_msgs::CommandCode::NAV_LAND;
-		waypoint[33].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
-		waypoint[33].autocontinue = true;
-		waypoint[33].is_current = false;
+		waypoint[41].x_lat = 39.9888508;
+		waypoint[41].y_long = 116.3573833;
+		waypoint[41].z_alt = 0;
+		waypoint[41].command = mavros_msgs::CommandCode::NAV_LAND;
+		waypoint[41].frame = mavros_msgs::Waypoint::FRAME_GLOBAL_REL_ALT;
+		waypoint[41].autocontinue = true;
+		waypoint[41].is_current = false;
 		break;
 		//------------------------------------------------------------	
 }
@@ -456,7 +472,7 @@ void ZHENCHAJI_FW::run()
 		//调用航迹规划函数规划侦察航线
 		plan_waypoint(4);
 		//完成航线的push  size：17
-		push_waypoints_to_px4(34, waypoint);
+		push_waypoints_to_px4(42, waypoint);
 	}
 	//重启qgc !!!!!!!!!!!!!!!!脚本路径需修改
 	std::string res;
